@@ -1,18 +1,14 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import md from "markdown-it";
 
-// Access your API key as an environment variable (see "Set up your API key" above)
 const genAI = new GoogleGenerativeAI(`${import.meta.env.VITE_API_KEY}`);
 
 async function run(ask) {
-  // For text-only input, use the gemini-pro model
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
   const prompt = ask;
-
   const result = await model.generateContent(prompt);
-  const response = await result.response;
-  const text = await response.text();
+  const response = result.response;
+  const text = response.text();
   return text;
 }
 
@@ -33,12 +29,14 @@ function Submitted_Question() {
 document
   .getElementById("submitButton")
   .addEventListener("click", async function () {
-    var questions = document.getElementById("question")
-    const output = document.getElementById("output")
+    var questions = document.getElementById("question");
+    const output = document.getElementById("output");
+    output.innerHTML += `<div id="userPrompt" class= "user w-max max-w-lg ml-4 rounded-md p-2 bg-slate-200">${questions.value}</div>`;
+    questions.value = " ";
     const asked = Submitted_Question();
     const answer = await run(asked);
-    const response = md().render(answer)
-    console.log(response);
-    output.innerHTML=response;
-    questions.value=" "
+    const response = md().render(answer);
+    output.innerHTML += `<div id="aiResponse" class="AI w-max max-w-lg m-4 rounded-md p-2 bg-slate-200">${response}</div>`;
+    console.log(answer);
+    console.log(output.innerHTML);
   });
