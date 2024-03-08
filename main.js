@@ -31,12 +31,13 @@ document
   .addEventListener("click", async function () {
     var questions = document.getElementById("question");
     const output = document.getElementById("output");
-    output.innerHTML += `<div id="userPrompt" class= "user w-max max-w-lg ml-4 rounded-md font-semibold p-2 bg-slate-200 text-slate-600 ">${questions.value}</div>`;
-    questions.value = " ";
+    const aioutput = document.getElementById("aioutput");
+    output.innerHTML += `<div id="userPrompt" class= "user ">${questions.value}</div>`;
     const asked = Submitted_Question();
+    questions.value = " ";
     const answer = await run(asked);
     const response = md().render(answer);
-    output.innerHTML += `<div id="aiResponse" class="AI w-max max-w-lg m-4 rounded-md p-2 bg-slate-200 text-slate-600 ">${response}</div>`;
+    output.innerHTML += `<div id="aiResponse" class="AI ">${response}</div>`;
     console.log(answer);
     console.log(output.innerHTML);
   });
