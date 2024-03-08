@@ -16,21 +16,31 @@
         float: right;
         margin: 0.5rem;
         width: max-content;
-        max-width: 32rem;
+        max-width: 40rem;
         border-radius: 6px;
         padding: 0.5rem;
         background-color: rgb(226, 232, 240);
         color: rgb(71 85 105);
+        overflow-x: hidden;
       }
       .user {
+        overflow-x: hidden;
         width: max-content;
-        max-width: 32rem;
-        margin-left: 1rem;
+        max-width: 40rem;
+        margin-left: 0.5rem;
         border-radius: 6px;
         padding: 0.5rem;
         background-color: rgb(226, 232, 240);
         color: rgb(71 85 105);
         font-weight: 600;
+      }
+      @media (max-width: 840px) {
+        .user {
+          max-width: 16rem;
+        }
+        .AI {
+          max-width: 16rem;
+        }
       }
     </style>
   </head>
@@ -43,13 +53,15 @@
         <div
           id="output"
           class="output bg-slate-300 w-full h-4/5 rounded-md overflow-y-auto"
-        >
-      </div>
+        ></div>
         <div
-          class="input bg-slate-500 w-full py-7 mt-5 flex justify-center items-center gap-2 rounded-md"
+          class="input bg-slate-500 w-full py-7 mt-5 flex justify-center items-center px-2 gap-2 rounded-md"
         >
           <input id="question" type="text" class="w-4/5 rounded-md py-3 px-8" />
-          <button id="submitButton" class="bg-slate-300 py-3 px-8 rounded-md">
+          <button
+            id="submitButton"
+            class="bg-slate-300 py-3 px-4 sm:px-8 rounded-md hover:bg-slate-400"
+          >
             Submit
           </button>
         </div>
