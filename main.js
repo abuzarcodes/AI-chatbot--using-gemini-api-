@@ -13,12 +13,12 @@ async function run(ask) {
 }
 
 function submitquest(input) {
-  var submittedQuestion = input.value;
+  let submittedQuestion = input.value;
   return submittedQuestion;
 }
 
 function Submitted_Question() {
-  var questions = document.getElementById("question");
+  let questions = document.getElementById("question");
   if (questions) {
     return submitquest(questions);
   } else {
@@ -29,15 +29,27 @@ function Submitted_Question() {
 document
   .getElementById("submitButton")
   .addEventListener("click", async function () {
-    var questions = document.getElementById("question");
+    let questions = document.getElementById("question");
     const output = document.getElementById("output");
     const aioutput = document.getElementById("aioutput");
-    output.innerHTML += `<div id="userPrompt" class= "user ">${questions.value}</div>`;
+    const aiwrapper = document.getElementById("aiwrapper");
+    const userwrapper = document.getElementById("userwrapper");
+    output.innerHTML += `<div class= "user ">${questions.value}</div> <div class ="loader"></div>`;
     const asked = Submitted_Question();
+    const loader = document.querySelectorAll(".loader");
     questions.value = " ";
-    const answer = await run(asked);
-    const response = md().render(answer);
-    output.innerHTML += `<div id="aiResponse" class="AI ">${response}</div>`;
-    console.log(answer);
-    console.log(output.innerHTML);
+    try {
+      const answer = await run(asked);
+      const response = md().render(answer);
+      loader.forEach(function (loader) {
+        loader.style.display = "none";
+      });
+      output.innerHTML += `<div class="AI ">${response}</div>`;
+    } catch (error) {
+      console.error("Error fetching the answer:", error);
+      loader.forEach(function (loader) {
+        loader.style.display = "none";
+      });
+      output.innerHTML += `<div class="AI ">Error try again</div>`;
+    }
   });
